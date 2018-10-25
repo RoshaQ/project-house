@@ -1,3 +1,4 @@
+import { UserStore } from './../../house/login/services/user-store';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,9 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuardService implements CanActivate {
 
+  constructor(
+    private router: Router,
+    private userStore: UserStore) { }
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+    if (this.userStore.getUser()) {
+      return true;
+    }
+
     this.router.navigate(['house/login']);
     return false;
   }
-  constructor(private router: Router) { }
+
 }
