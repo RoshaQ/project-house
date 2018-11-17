@@ -10,17 +10,19 @@ import { UserTo } from 'src/app/house/house-model/user-to';
 export class AuthenticationService {
     constructor(private http: HttpClient, private userStore: UserStore) {}
 
-    public login(username: string, password: string) {
+    public login(username: string, password: string): Boolean {
         if (username === 'admin' && password === 'admin') {
             const user = {
                 username: username,
                 password: password,
             } as UserTo;
             this.userStore.setUser(user);
+            return true;
         }
+        return false;
     }
 
-    public logout() {
+    public logout(): void {
         this.userStore.resetUser();
     }
 }

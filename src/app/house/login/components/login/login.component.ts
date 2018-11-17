@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        this.authenticationService.login(this.f.username.value, this.f.password.value);
+        const isLogged = this.authenticationService.login(this.f.username.value, this.f.password.value);
 
-        if (this.userStore.getUser()) {
+        if (isLogged) {
             this.dataSuccess = true;
             this.router.navigate(['/']);
         } else {
