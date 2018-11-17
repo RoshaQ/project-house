@@ -12,19 +12,19 @@ export class UserStore {
 
     initState(): BehaviorSubject<UserState> {
         return new BehaviorSubject<UserState>({
-            user: undefined
+            user: undefined,
         });
     }
 
     setUser(user: UserTo): void {
         this.emitNewState({
-            user: user
+            user: user,
         } as UserState);
     }
 
     resetUser(): void {
         this.emitNewState({
-            user: undefined
+            user: undefined,
         } as UserState);
     }
 

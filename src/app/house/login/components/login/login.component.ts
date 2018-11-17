@@ -6,48 +6,48 @@ import { first } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.less'],
 })
 export class LoginComponent implements OnInit {
+    loginForm: FormGroup;
+    submitted = false;
+    dataSuccess: Boolean;
+    constructor(
+        private formBuilder: FormBuilder,
+        private router: Router,
+        private authenticationService: AuthenticationService,
+        private userStore: UserStore,
+    ) {}
 
-  loginForm: FormGroup;
-  submitted = false;
-  dataSuccess: Boolean;
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private userStore: UserStore) { }
-
-  ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-    this.authenticationService.logout();
-  }
-
-  get f() { return this.loginForm.controls; }
-
-  onSubmit(): void {
-    this.submitted = true;
-
-    if (this.loginForm.invalid) {
-      return;
+    ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required],
+        });
+        this.authenticationService.logout();
     }
 
-    this.authenticationService.login(this.f.username.value, this.f.password.value);
-
-    if (this.userStore.getUser()) {
-      this.dataSuccess = true;
-      this.router.navigate(['/']);
-    } else {
-      this.dataSuccess = false;
+    get f() {
+        return this.loginForm.controls;
     }
-  }
 
+    onSubmit(): void {
+        this.submitted = true;
+
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        this.authenticationService.login(this.f.username.value, this.f.password.value);
+
+        if (this.userStore.getUser()) {
+            this.dataSuccess = true;
+            this.router.navigate(['/']);
+        } else {
+            this.dataSuccess = false;
+        }
+    }
 }

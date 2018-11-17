@@ -1,6 +1,5 @@
 import { environment } from './../../../environments/environment';
 export class Logger {
-
     private static develop = !environment.production;
 
     static debug(message: string, param?: any) {
